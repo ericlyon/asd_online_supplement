@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+ <html>
+   <head>
+<title> Reload for a different sound </title> </head>
+<button onclick="changeChord()">Change Chord</button>
+<div>
+Volume Slider:
+</div>
+<div class="slidecontainer">
+  <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+</div>
+
+ <body>  
+   <script>
+const audioCtx = new (window.AudioContext || window.webkitAudioContext);
+const volume = audioCtx.createGain();
+const panner = audioCtx.createPanner();
+var panX, panY, panZ;
+var theWaves = [];
+var i;
+var now = audioCtx.currentTime;
+for(i = 0; i < 8; i++){
+    var wave = audioCtx.createOscillator();
+    wave.type = 'triangle';
+    wave.frequency.value = 100 + (Math.random() * 600);
+    wave.start();
+    
+    wave.connect(panner);
+    theWaves[i] = wave;
+}
+panner.coneOuterGain = 0.1;
+panner.coneOuterAngle = 180;
+panner.coneInnerAngle = 0;
+audioCtx.listener.setPosition(0, 0, 0);
+panX = (2 * Math.random()) - 1.0;
+panY = (2 * Math.random()) - 1.0;
+panZ = -0.5;
+panner.setPosition(panX,panY,panZ);
+volume.gain.value=0.0;
+panner.connect(volume);
+volume.connect(audioCtx.destination);
+
+var slider = document.getElementById("myRange");
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+    var amplitude = this.value / 100;
+    var now = audioCtx.currentTime;    
+    volume.gain.linearRampToValueAtTime(amplitude * 0.025, now + 0.05);
+}
+
+function changeChord() {
+    
+    random_bg_color();
+    var i;
+    for(i = 0; i < 8; i++){
+        var thisWave= theWaves[i];
+        thisWave.frequency.value = 100 + (Math.random() * 600);
+    }
+}
+function random_bg_color() {
+    var x = Math.floor(Math.random() * 256);
+    var y = Math.floor(Math.random() * 256);
+    var z = Math.floor(Math.random() * 256);
+    var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+    // console.log(bgColor);
+    
+    document.body.style.background = bgColor;
+}
+
+random_bg_color();
+
+            	
+   </script>
+    </body>
+</html>

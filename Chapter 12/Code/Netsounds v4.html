@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <!--meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"-->
+    <!-- meta name="viewport" content="width=device-width"-->
+
+    <title>decodeAudioData example</title>
+
+
+  </head>
+
+  <body>
+    <h1>decodeAudioData example</h1>
+
+    <!--p>Note: This example does not work in Safari, due to some kind of bug.</p-->
+
+    <button class="play">Play</button>
+    <button class="stop">Stop</button>
+    <button onclick="playme1()">Play Different</button>
+
+    <h2>Set playback rate</h2>
+    <input class="playback-rate-control" type="range" min="0.25" max="3" step="0.01" value="1">
+    <span class="playback-rate-value">1.0</span>
+
+    <pre></pre>
+  </body>
+  <script>
+    // define variables
+
+    const audioCtx = new(window.AudioContext || window.webkitAudioContext);
+    var source;
+    //    let songLength;
+
+   //  const pre = document.querySelector("pre");
+    // const myScript = document.querySelector("script");
+    const play = document.querySelector('.play');
+    const stop = document.querySelector('.stop');
+    const playbackControl = document.querySelector('.playback-rate-control');
+    const playbackValue = document.querySelector('.playback-rate-value');
+    const freesound_urls = [
+      "https://freesound.org/data/previews/253/253133_1648170-lq.mp3",
+      "https://freesound.org/data/previews/513/513561_2898771-lq.mp3",
+      "https://freesound.org/data/previews/515/515309_3205651-lq.mp3"
+    ];
+    append_new_slider();
+    // shaddowing existing variable var request;
+    playbackControl.setAttribute('disabled', 'disabled');
+
+    function append_new_slider() {
+      var rangeslider;
+      var x = document.createElement("INPUT");
+      			var i = 0;
+      x.onclick = function() {
+        console.log("from new slider");
+                  getData();
+    	 source.start(0);
+     	 // play.setAttribute('disabled', 'disabled');
+     	 playbackControl.removeAttribute('disabled');
+      }
+      x.setAttribute("type", "button");
+      x.value = "Play Soundfile " + (i + 1);
+      document.body.appendChild(x);
+    }
+
+    function getData() {
+      var url;
+      var scrambled_urls = shuffle(freesound_urls);
+
+      url = scrambled_urls[0];
+      source = audioCtx.createBufferSource();
+      request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.responseType = 'arraybuffer';
+
+
+      request.onload = function() {
+        let audioData = request.response;
+
+        audioCtx.decodeAudioData(audioData, function(buffer) {
+            myBuffer = buffer;
+            songLength = buffer.duration;
+            source.buffer = myBuffer;
+            source.playbackRate.value = playbackControl.value;
+            source.connect(audioCtx.destination);
+            source.loop = true;
+            console.log("successfully loaded " + scrambled_urls[0]);
+          },
+
+          function(errmsg) {
+            console.log("Error loading" + scrambled_urls[0] + " with error: " + errmsg.err);
+          }
+        );
+      }
+
+      request.send();
+    }
+
+    // wire up buttons to stop and play audio, and range slider control
+
+    play.onclick = function() {
+      getData();
+      source.start(0);
+      play.setAttribute('disabled', 'disabled');
+      playbackControl.removeAttribute('disabled');
+    }
+
+    stop.onclick = function() {
+      source.stop(0);
+      play.removeAttribute('disabled');
+      playbackControl.setAttribute('disabled', 'disabled');
+    }
+
+    playbackControl.oninput = function() {
+      source.playbackRate.value = playbackControl.value;
+      playbackValue.innerHTML = playbackControl.value;
+    }
+
+    function playme1() {
+      getData();
+      source.start(0);
+      play.setAttribute('disabled', 'disabled');
+      playbackControl.removeAttribute('disabled');
+    }
+
+    // utilities
+    function shuffle(array) {
+      var currentIndex = array.length,
+        randomIndex;
+      while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex], array[currentIndex]
+        ];
+      }
+      return array;
+    }
+    // dump script to pre element
+
+//    pre.innerHTML = myScript.innerHTML;
+
+  </script>
+
+</html>
