@@ -1,0 +1,20 @@
+
+
+QuarksGui.new
+
+(
+var farben = [
+	[0,8,11,16,21],
+	[0,8,11,17,21],
+	[0,8,11,15,22],
+	[0,9,11,15,20],
+	[0,7,12,15,20],
+	[1,7,10,15,20],
+	[-1,7,10,15,20],
+] + 48;
+
+m = SimpleMIDIFile( "~/Desktop/farben.mid" ); // create empty file
+m.init0( tempo, "4/4"); // init for single track MIDI file
+m.timeMode = \seconds;  // change from default to something useful
+
+)
