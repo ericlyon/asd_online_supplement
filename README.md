@@ -14,3 +14,21 @@ All of the code in this supplement is free for you to use, under the MIT License
 >THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 You are welcome to use this code whether or not you purchase the book. Most probably, the code will make a lot more sense if you do read the book.
+Here is an abbreviated Table of Contents:
+
+# Preface
+# 1. Tweaking and Randomness
+# 2. Additive Synthesis I: Harmonic Spectra
+# 3. Additive Synthesis II: Inharmonicity and Polyphony
+# 4. Additive Synthesis III: Ambient Textures
+# 5. Additive Synthesis IV: Analysis-Transformation-Synthesis
+# 6. Frequency Modulation I: Direct Synthesis
+# 7. Frequency Modulation II: Parametric Control
+# 8. Automated Drum Machines I: A Max Project
+# 9. Automated Drum Machines II: A SuperCollider Project
+# 10. Aggregate Processors in Max
+# 11. Too Many Notes: Black MIDI
+# 12. Audio Processing in the Web Browser
+# Afterword
+# Annotated Bibliography
+# Index
