@@ -3,7 +3,7 @@ This supplement contains soundfiles and code examples from my book Automated Sou
 Editions, under their Computer Music and Digital Audio Imprint: 
 https://www.areditions.com/publications/computer-music-and-digital-audio.html
 
-All of the code in this supplement is free for you to use, under the MIT License, as stated below:
+All of the code in this supplement is free for you to use under the MIT License, as stated below:
 
 >Copyright 2022 Eric Lyon
 
@@ -13,7 +13,8 @@ All of the code in this supplement is free for you to use, under the MIT License
 
 >THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-You are welcome to use this code whether or not you purchase the book. Most probably, the code will make a lot more sense if you do read the book.
+You are welcome to use this code whether or not you purchase the book. The code will probably make more sense if you do read the book.
+
 Here is an abbreviated Table of Contents:
 
 ### Preface
