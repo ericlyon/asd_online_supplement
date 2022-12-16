@@ -11,9 +11,9 @@ All of the code in this supplement is free for you to use under the MIT License,
 >THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </p>
 You are welcome to use this code whether or not you purchase the book. 
-
+<p>
 Here is an abbreviated Table of Contents:
-
+</p>
 ### Preface
 ### 1. Tweaking and Randomness
 ### 2. Additive Synthesis I: Harmonic Spectra
@@ -30,6 +30,9 @@ Here is an abbreviated Table of Contents:
 ### Afterword
 ### Annotated Bibliography
 ### Index
+<p>
+<a href="https://www.areditions.com/media/arfiles/product_images/DAS028_samples.pdf">Here</a> is the full TOC with a few sample pages from the book.
+</p>
 
 This book represents decades of research into automated sound design
 techniques and their compositional applications. Despite the familiar
