@@ -31,8 +31,20 @@ Here is an abbreviated Table of Contents:
 ### Annotated Bibliography
 ### Index
 
-This book represents decades of research into automated sound design techniques and their compositional applications. Despite the familiar topics, I believe that readers will find a different approach to sound design than they may be familiar with. Once the central concept of the book has been grasped, and the necessary skills acquired, there are endless other sound design techniques that could be treated similarly. As I suggest in the Afterword, these techniques might also lend themselves to machine learning approaches, an idea that I look forward to investigating in the next phase of this research.
+This book represents decades of research into automated sound design
+techniques and their compositional applications. Despite the familiar
+topics, I believe that readers will find a different approach to sound
+design than they may be familiar with. Once the central concept of the
+book has been grasped, and the necessary skills acquired, there are
+endless other sound design techniques that could be treated similarly.
+As I suggest in the Afterword, these techniques might also lend
+themselves to machine learning approaches, an idea that I look forward
+to investigating in the next phase of this research.
 
-For those of you who just want to make some cool sounds, the software provided with the book (found within this supplement) may provide you with a few new tools and ideas.
+For those of you who just want to make some cool sounds, the software
+found within this supplement may provide you with a few new tools and ideas.
 
--Eric
+Eric Lyon
+ericlyon@vt.edu
+Blacksburg, Virginia
+December 16, 2022
