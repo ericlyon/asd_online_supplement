@@ -44,7 +44,7 @@ to investigating in the next phase of this research.
 For those of you who just want to make some cool sounds, the software
 found within this supplement may provide you with a few new tools and ideas.
 
-Eric Lyon
-ericlyon@vt.edu
-Blacksburg, Virginia
+Eric Lyon<br>
+ericlyon@vt.edu<br>
+Blacksburg, Virginia<br>
 December 16, 2022
