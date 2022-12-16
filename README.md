@@ -33,7 +33,7 @@ Here is an abbreviated Table of Contents:
 ### Index
 
 <p>
-<a href="https://www.areditions.com/media/arfiles/product_images/DAS028_samples.pdf">Here</a> is the full TOC with a few sample pages from the book.
+<a href="https://www.areditions.com/media/arfiles/product_images/DAS028_samples.pdf target="_blank" rel="noopener noreferrer"">Here</a> is the full TOC with a few sample pages from the book.
 </p>
 
 This book represents decades of research into automated sound design
