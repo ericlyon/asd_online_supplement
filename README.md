@@ -14,6 +14,7 @@ You are welcome to use this code whether or not you purchase the book.
 <p>
 Here is an abbreviated Table of Contents:
 </p>
+
 ### Preface
 ### 1. Tweaking and Randomness
 ### 2. Additive Synthesis I: Harmonic Spectra
@@ -30,6 +31,7 @@ Here is an abbreviated Table of Contents:
 ### Afterword
 ### Annotated Bibliography
 ### Index
+
 <p>
 <a href="https://www.areditions.com/media/arfiles/product_images/DAS028_samples.pdf">Here</a> is the full TOC with a few sample pages from the book.
 </p>
