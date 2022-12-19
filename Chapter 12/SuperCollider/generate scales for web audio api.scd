@@ -1,7 +1,7 @@
-1.5 * 9/8
+// A few examples for generating scale ratios
 
 (
-	var slendro =  [0, 219.5,266.5,227,233.5,258.5];
+var slendro =  [0, 219.5,266.5,227,233.5,258.5];
 var ratios = slendro.integrate.collect({ arg x; (2 ** (x/1200)).trunc(0.0001) });
 ratios
 )
