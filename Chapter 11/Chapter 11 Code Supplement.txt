@@ -1,0 +1,641 @@
+Chapter 11 Code Supplement
+
+(
+var farben = [[0,8,11,16,21],[0,8,11,17,21],[0,8,11,15,22],[0,9,11,15,20], [0,7,12,15,20],[1,7,10,15,20],[-1,7,10,15,20]] + 48;
+var tempo = 64;
+var halfNote = (60/tempo) * 2;
+var now = 0;
+var velocity = 120, upVel = 0;
+m = SimpleMIDIFile("~/Desktop/farben.mid"); 
+m.init0(tempo, "4/4"); 
+m.timeMode = \seconds; 
+farben.do({
+	arg chord, i;
+	if(i == 6,{
+		chord.do({
+			arg midikey;
+			m.addNote( midikey, velocity, now, halfNote * 4, upVel);
+		});
+		now = now + (halfNote * 4);
+	},{
+		4.do({
+			chord.do({
+				arg midikey;
+				m.addNote( midikey, velocity, now, halfNote, upVel);
+			});
+			now = now + halfNote;
+		});
+	});
+});
+)
+
+Figure 11.2 Generating MIDI data for the Schoenberg “Farben” canon.
+
+(
+m.adjustEndOfTrack;
+m.write;
+)
+
+Figure 11.3 – Adding an “end of track” message and writing the MIDI file to disk.
+
+1 (
+ 2 var farben = [[0,8,11,16,21],[0,8,11,17,21],[0,8,11,15,22],[0,9,11,15,20], [0,7,12,15,20],[1,7,10,15,20],[-1,7,10,15,20]] + 48;
+ 3 var tempo = 64;
+ 4 var halfNote = (60/tempo) * 2;
+ 5 var now = 0;
+ 6 var velocity = 120, upVelo = 0;
+ 7 m = SimpleMIDIFile("~/Desktop/farben_multitrack.mid");
+ 8 m.init1(6, tempo, "4/4");
+ 9 m.timeMode = \seconds;
+10 farben.do({
+11 	arg chord, i;
+12 	if(i == 6,{
+13 		chord.do({
+14 			arg midikey;
+15 			m.addNote(midikey, velocity, now, halfNote * 4, upVelo, 
+track: rrand(1,5));
+16 		});
+17 		now = now + (halfNote * 4);
+18 	},{
+19 		4.do({
+20 			chord.do({
+21 				arg midikey;
+22 				m.addNote(midikey, velocity, now, halfNote, upVelo, 
+track: rrand(1,5));
+23 			});
+24 			now = now + halfNote;
+25 		});
+26 	});
+27 });
+28 )
+
+Figure 11.4 SC code to generate a multitrack MIDI file for “Farben.”
+
+(
+var now = 0;
+var tempo = 90;
+var n4 = 60 / tempo; // quarter note
+var n8 = n4 / 2; // eigth note
+var n16 = n4 / 4; // 16th note
+var n32 = n4 / 8; // 32nd note
+var n64 = n4 / 16; // 64th note
+var n2 = n4 * 2; // half note
+var line1 = [78,76,74,73,71,69,71,73];
+var line2 = [74,73,71,69,67,66,67,64];
+var line3 = [62,66,69,67,66,62,66,64, 62, 59, 62, 69, 67, 71, 69, 67];
+var bass = [50,45,47,42,43,38,43,45];
+var sectionStartTime = 0.0;
+var monoGliss, clust1, clust2;
+m = SimpleMIDIFile( "~/Desktop/pachelbel-canon.mid" );
+m.init0( tempo, "4/4");
+m.timeMode = \seconds;
+
+Figure 11.7 Main declarations for a Black MIDI version of Pachelbel’s “Canon in D.”
+
+// first line
+now = 0.0;
+line1.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	m.addNote( midikey, velo, now, n4, upVelo, sort: false );
+	now = now + n4;
+});
+// second line
+now = 0.0;
+line2.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	m.addNote( midikey, velo, now, n4, upVelo, sort: false );
+	now = now + n4;
+});
+// third line
+now = 0.0;
+line3.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	m.addNote( midikey, velo, now, n8, upVelo, sort: false );
+	now = now + n8;
+});
+// bassline
+now = 0.0;
+bass.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	m.addNote( midikey, velo, now, n4, upVelo, sort: false );
+	now = now + n4;
+});
+
+Figure 11.8 First iteration of the Pachelbel canon in SuperCollider code.
+
+sectionStartTime = n4 * 8;
+// first line
+now = sectionStartTime;
+line1.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	4.do({
+		var thisKey = midikey + (rrand(-1,2) * 12);
+		m.addNote(thisKey, velo, now, n16, upVelo, sort: false);
+		now = now + n16;
+	});
+});
+// second line
+now = sectionStartTime;
+line2.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	4.do({
+		var thisKey = midikey + (rrand(-1,2) * 12);
+		m.addNote(thisKey, velo, now, n16, upVelo, sort: false);
+		now = now + n16;
+	});
+});
+// third line
+now = sectionStartTime;
+line3.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	2.do({
+		var thisKey = midikey + (rrand(-1,2) * 12);
+		m.addNote(thisKey, velo, now, n16, upVelo, sort: false);
+		now = now + n16;
+	});
+});
+// bass line
+now = sectionStartTime;
+bass.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	m.addNote(midikey, velo, now, n4, upVelo, sort: false);
+	now = now + n4;
+});
+
+Figure 11.9 Second iteration of the Pachelbel Canon.
+
+sectionStartTime = n4 * 16;
+// first layer
+now = sectionStartTime;
+line1.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	8.do({
+		var thisKey = midikey + (rrand(-1,2) * 12);
+		m.addNote( thisKey, velo, now, n32, upVelo, sort: false );
+		now = now + n32;
+	});
+});
+
+Figure 11.10 The third Black MIDI iteration of the Pachelbel canon (first line only).
+
+line1 = [74,73,74,62,61,69,64,66,62,74,73,71,73,78,81,83, 
+,78,76,79,78,76,74,73,71,69,67,66,64,67,66,64];
+line2 = [66,62,64,73,74,78,81,69,71,67,69,66,62,74,74,73];
+line3 = [62,66,69,67,66,62,66,64, 62, 59, 62, 69, 67, 71, 69, 67];
+sectionStartTime = n4 * 24;
+// first line
+now = sectionStartTime;
+line1.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	2.do({
+		var thisKey = midikey + (rrand(-1,2) * 12);
+		m.addNote( thisKey, velo, now, n32, upVelo, sort: false );
+		now = now + n32;
+	});
+});
+// second line
+now = sectionStartTime;
+line2.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	4.do({
+		var thisKey = midikey + (rrand(-1,2) * 12);
+		m.addNote(thisKey, velo, now, n32, upVelo, sort: false);
+		now = now + n32;
+	});
+});
+// third line
+now = sectionStartTime;
+line3.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	4.do({
+		var thisKey = midikey + (rrand(-1,2) * 12);
+		m.addNote(thisKey, velo, now, n32, upVelo, sort: false);
+		now = now + n32;
+	});
+});
+// bass line
+now = sectionStartTime;
+bass.do({
+	arg midikey;
+	var velo = 90;
+	var upVelo = velo;
+	4.do({ arg i;
+		var transpo = i % 2;
+		m.addNote(midikey + (12 * transpo) - 12, velo, now, n16, upVelo, 
+sort: false);
+		now = now + n16;
+	});
+});
+
+Figure 11.12 The fourth Black MIDI iteration of the Pachelbel Canon.
+
+monoGliss =
+[61,62,64,66,67,69,71,73,74,76,78,79,81,83,85,86,88,90,
+,93,95,97,98,100,102,103,105,107,109];
+now = sectionStartTime + (6 * n4);
+monoGliss.do({
+	arg midiKey;
+	var beat14 = n4 / 14;
+	var velo = 90;
+	var upVelo = velo;
+	m.addNote(midiKey, velo, now, beat14, upVelo, sort: false);
+	now = now + beat14;
+});
+
+Figure 11.13 – A rapid upward diatonic glissando.
+
+// slow cluster percussion
+clust1 = [26, 28, 30, 31, 33, 35, 37];
+clust2 = [86, 88, 90, 91, 93, 95, 97];
+now = sectionStartTime;
+7.do({arg i;
+	var thisClust;
+	var velo = 85;
+	var upVelo = velo;
+	if((i%2) == 1, {thisClust = clust1}, {thisClust = clust2});
+	4.do({
+		thisClust.do({
+			arg midiKey;
+			m.addNote(midiKey, velo, now, n16, upVelo, sort: false);
+		});
+		now = now + n16;
+	});
+});
+// fast cluster percussion
+now = sectionStartTime  + (7 * n4);
+8.do({
+	arg i;
+	var thisClust;
+	var velo = 85;
+	var upVelo = velo;
+	if(i < 4, {thisClust = clust1}, {thisClust = clust2});
+	thisClust.do({
+		arg midiKey;
+		m.addNote(midiKey, velo, now, n32, upVelo, sort: false);
+	});
+	now = now + n32;
+});
+
+Figure 11.14 Rhythmic tone clusters for the fifth Black MIDI iteration of the Pachelbel Canon.
+
+monoGliss = 
+[61,62,64,66,67,69,71,73,74,76,78,79,81,83,85,86,88,90,91,
+,95,97,98,100,102,103,105,107];
+now = sectionStartTime;
+6.do({arg i;
+	var timeInc = n4 / monoGliss.size;
+	if((i % 2) == 0, {
+		monoGliss.size.do({arg j;
+			var midiKey = monoGliss[(monoGliss.size - 1) - j];
+			m.addNote(midiKey, velo, now, n16, upVelo, sort: false);
+			now = now + timeInc;
+		});
+	}, {
+		monoGliss.size.do({ arg j;
+			var midiKey = monoGliss[j];
+			m.addNote(midiKey, velo, now, n16, upVelo, sort: false);
+			now = now + timeInc;
+		});
+	});
+});
+
+Figure 11.15 Glissando code for the sixth Black MIDI iteration of the Pachelbel Canon.
+
+// wedge
+now = sectionStartTime  + (6 * n4);
+// upper glissando
+1.do({arg i;
+	var wedge = 
+[62,64,66,67,69,71,73,74,76,78,79,81,83,85,86,
+,90,91,93,95,97,98,100,102,103,105,107];
+	var upWedge =  wedge ++ wedge.reverse;
+	var timeInc = n2 / upWedge.size;
+	upWedge.do({arg midiKey;
+			m.addNote( midiKey, velo - i, now, timeInc, upVelo, 
+sort: false);
+			now = now + timeInc;
+	});
+});
+// lower glissando
+now = sectionStartTime + (6 * n4);
+1.do({ arg i;
+	var wedge = 
+[62,61,59,57,55,54,52,50,49,47,45,43,42,40,
+,37,35,33,31,30,28,26];
+	var downWedge =  wedge ++ wedge.reverse ;
+	var timeInc = n2 / downWedge.size;
+	downWedge.do({ arg midiKey;
+			m.addNote(midiKey, velo - i, now, timeInc, upVelo, 
+sort: false);
+			now = now + timeInc;
+	});
+});
+
+Figure 11.16 The wedge figure in the sixth Black MIDI iteration.
+
+sectionStartTime = n4 * 48;
+line1 = [78,76,74,73,71,69,71,73];
+line2 = [74,73,71,69,67,66,67,64];
+line3 = [62,66,69,67,66,62,66,64, 62, 59, 62, 69, 67, 71, 69, 67];
+[line1, line2].do({
+	arg thisLine, trk;
+	now = sectionStartTime;
+	thisLine.do({
+		arg mkey, eventNumber;
+		switch(eventNumber,
+			0, {now = ~reps.(m,mkey,velo,16,n64,now,trk + 1);},
+			1, {now = ~rnotes.(m,mkey,velo,8,n32,now,0,1,trk + 1);},
+			2, {now = ~cresc.(m,mkey,72,2,32,n128,now,trk + 1);},
+			3, {now = ~rnotes.(m,mkey,velo,8,n32,now,-1,1,trk + 1);},
+			4, {now = ~rnotes.(m,mkey,velo,8,n32,now,-2,4,trk + 1);},
+			5, {now = ~rnotes.(m,mkey,velo,8,n32,now,-2,4,trk + 1);},
+			6, {now = ~rnotes.(m,mkey,velo16,n64,now,-1,3,trk + 1);},
+			7, {now = ~rnotes.(m,mkey,velo,32,n128,now,-2,4,trk + 1);},
+		);
+	});
+});
+
+Figure 11.17 – the first two layers of the seventh Black MIDI iteration of the Pachelbel Canon.
+
+~reps = {
+	arg m, keyNum, velo, reps, tinc, now, trk;
+	reps.do({
+	    m.addNote(keyNum, velo, now, tinc, 0, track: trk, sort: false);
+now = now + tinc;
+	});
+	now;
+};
+~rnotes = {
+	arg m, keyNum, velo, reps, tinc, now, minOct, maxOct, trk;
+	reps.do({
+	    var key = keyNum + (rrand(minOct,maxOct) * 12);
+	    m.addNote(key, velo, now, tinc, 0, track: trk, sort: false);
+	    now = now + tinc;
+	});
+	now;
+};
+~cresc = {
+	arg m, keyNum, startVel, incrVel, reps, tinc, now, trk;
+	reps.do({arg i;
+	    m.addNote(keyNum, startVel + (i * incrVel), now, tinc, 0, 
+track:trk, sort: false);
+	    now = now + tinc;
+	});
+	now;
+};
+
+Figure 11.18 – Utility functions for a more compact representation of the Pachelbel Canon.
+
+now = sectionStartTime;
+line3.do({
+	arg midikey, eventNumber;
+	var trk = 3;
+	switch(eventNumber,
+		0, {now = ~reps.(m,midikey, velo, 8, n64, now, trk);},
+		1, {now  = ~reps.(m,midikey, velo, 8, n64, now, trk);},
+		2, {now = ~rnotes.(m, midikey, velo, 4, n32, now, 0, 1,trk);},
+		3, {now = ~rnotes.(m,midikey, velo, 4, n32, now, 0, 1, trk);},
+		4, {now = ~cresc.(m,midikey,72, 2, 16, n128, now, trk);},
+		5, {now = ~cresc.(m,midikey,72, 2, 16, n128, now, trk);},
+		6, {now = ~rnotes.(m,midikey, velo, 16, n128, now, -1, 2, trk);},
+		7, {now = ~rnotes.(m,midikey, velo, 16, n128, now, -1, 2, trk);},
+		8, {now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);},
+		9, {now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);},
+		10,{now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);},
+		11,{now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);},
+		12,{now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);},
+		13,{now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);},
+		14,{now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);},
+		15,{now = ~rnotes.(m,midikey, velo, 16, n128, now, -2, 3, trk);}
+	);
+});
+
+Figure 11.19 The third voice of the seventh iteration of the Pachelbel Canon.
+
+now = sectionStartTime;
+bass.do({
+	arg midikey, eventNumber;
+	switch(eventNumber,
+		0, {now = ~octnotesrand.(m, midikey, velo, 8, n32, now, 2, 4);},
+		1, {now = ~octnotes.(m, midikey, velo, 2, n8, now, 4);},
+		2, {now = ~octnotesrand.(m, midikey, velo, 8, n32, now, 2, 4);},
+		3, {now = ~octnotes.(m, midikey, velo, 2, n8, now, 4);},
+		4, {now = ~octnotesrand.(m, midikey, velo, 8, n32, now, 4, 4);},
+		5, {now = ~octnotesrand.(m, midikey, velo, 8, n32, now, 4, 4);},
+		6, {now = ~octnotesrand.(m, midikey, velo, 16, n64, now, 4, 4);},
+		7, {now = ~octnotesrand.(m, midikey, velo, 32, n128, now, 4, 4);}
+	);
+});
+
+Figure 11.20 The bass line for the seventh iteration of the Pachelbel Canon.
+
+~octnotes = {
+	arg m, keyNum, velo, reps, tinc, now, trk;
+	reps.do({arg i;
+		m.addNote(keyNum, velo, now, tinc, 0, track: trk, sort: false);
+		m.addNote(keyNum - 12, velo, now, tinc, 0, track: trk, 
+sort: false);
+		now = now + tinc;
+	});
+	now;
+};
+~octnotesrand = {
+	arg m, keyNum, velo, reps, tinc, now, rval, trk;
+	reps.do({arg i;
+		var thisKey = keyNum + (rval.rand * 12);
+		m.addNote(thisKey, velo, now, tinc, 0, track: trk, 
+sort: false);
+		m.addNote(thisKey - 12, velo, now, tinc, 0, track: trk, 
+sort: false);
+		now = now + tinc;
+	});
+	now;
+};
+
+Figure 11.21 Octave doubling functions for the bass line.
+
+~clustgliss = {
+	arg m,reps,tinc,now,startKey,endKey,startVel,endVel,thickness,trk;
+	var veloIncr = (endVel - startVel) / reps;
+	var keyIncr = (endKey - startKey) / reps;
+	reps.do({ arg i;
+		var keyNum = (startKey + (keyIncr * i)).floor;
+		var velo = (startVel + (veloIncr * i)).floor;
+		thickness.do({ arg j;
+		    m.addNote(keyNum + j,velo,now,tinc,0,track: trk,sort: false);
+		});
+		now = now + tinc;
+	});
+	now;
+};
+
+Figure 11.22 The “~clustgliss” function.
+
+~clusters = {
+	arg m,reps,tinc,now,keyNum,startVel,endVel,thickness,trk;
+	var veloIncr = (endVel - startVel) / reps;
+	reps.do({arg i;
+		thickness.do({arg j;
+			var velo = (startVel + (veloIncr * i)).floor;
+			m.addNote(keyNum + j, velo, now, tinc, 0, track: trk, 
+sort: false);
+		});
+		now = now + tinc;
+	});
+	now;
+};
+
+Figure 11.23 The “~clusters” function.
+
+~funnel = {
+	arg m,now,reps,tinc,velo,startKey1,endKey1,startKey2,endKey2,trk;
+	var increment1 = (endKey1 - startKey1) / reps;
+	var increment2 = (endKey2 - startKey2) / reps;
+	var floatKey1 = startKey1, floatKey2 = startKey2;
+	var fullLength = tinc * reps;
+	reps.do({arg i;
+		var noteLength = fullLength - (i * tinc);
+		m.addNote(floatKey1.floor,velo,now,noteLength,0,track:trk,
+sort: false);
+		m.addNote(floatKey2.floor,velo,now,noteLength,0,track:trk,
+sort: false);
+		floatKey1 = floatKey1 + increment1;
+		floatKey2 = floatKey2 + increment2;
+		now = now + tinc;
+	});
+	now;
+};
+
+Figure 11.24 The “~funnel” function.
+
+~sinegliss = {
+	arg m,reps,tinc,now,startKey,endKey,velo,phase,sineSpeed,trk;
+	var sineVal, keyNum;
+	reps.do({ arg i;
+		sineVal = (2 * sineSpeed * (i/reps)).sinPi;
+		keyNum = sineVal.linlin(-1,1,startKey,endKey);
+		m.addNote(keyNum, velo, now, tinc, 0, track: trk, sort: false);
+		now = now + tinc;
+	});
+	now;
+};
+
+Figure 11.25 The “~sinegliss” function.
+
+now = sectionStartTime;
+~clustgliss.(m, 32, n32, now, 100, 44, 120, 80, 6, 6);
+now = sectionStartTime + n2 + n8;
+~clusters.(m, 4, n32, now, 74, 127, 80, 12, 5);
+now = sectionStartTime + n2 + n4;
+~clusters.(m, 4, n32, now, 50, 127, 80, 12, 5);
+now = sectionStartTime + n2 + n4 + n8;
+~clusters.(m, 4, n32, now, 23, 127, 80, 12, 5);
+now = sectionStartTime  + (4 * n4);
+~clustgliss.(m, 12, n64, now, 21, 95, 150, 90, 24, 6);
+now = sectionStartTime;
+~sinegliss.(m, 128, n64, now, 21, 48, 105, 0, 6.0, 7);
+now = sectionStartTime  + (4 * n4);
+~funnel.(m, now, 16, n32, 100, 72,56, 39, 55, 5 );
+now = sectionStartTime  + (6 * n4);
+~funnel.(m, now, 32, n64, 100, 56,108, 55, 21, 5);
+
+Figure 11.26 Using Black MIDI utility functions to generate patterns atop the main layers of the Canon.
+
+sectionStartTime = n4 * 56;
+now = sectionStartTime;
+7.do({arg i;
+	var chord =  [26, 38, 50, 54] + (i * 12);
+	var velo = 105;
+	chord.do({arg keyNum;
+		m.addNote(keyNum, velo, now, 8 * n4, 100, track: 1, sort: false);
+	});
+});
+
+Figure 11.27 The final chord of the Black MIDI version of the Pachelbel Canon.
+
+m.sortMIDIEvents;
+m.adjustEndOfTrack;
+m.write;
+
+Figure 11.28 Writing the Pachelbel Canon MIDI file to disk.
+
+(
+var filename = SCDoc.helpSourceDir +/+ "images/Swamp.png";
+var img = Image.new(filename); 
+img.plot;
+("image height:" + img.height ++ ", image width:" + img.width).postln;
+)
+
+Figure 11.30 Opening an image file in SuperCollider.
+
+var img = Image.new(SCDoc.helpSourceDir +/+ "images/Swamp.png"); 
+img.height.do({arg y;
+	img.width.do({arg x;
+		var thisPix = img.getPixel(x,y);
+		var data = Image.pixelToColor(thisPix);
+		var colorMix = data.red + data.blue + data.green;
+		postf("% ", colorMix.trunc(0.1));
+	});
+	"".postln;
+});
+
+Figure 11.31 Printing summed pixel data from the “Swamp.png” image. 
+
+var duration = 60.0;
+var now = 0.0;
+var tempo = 120;
+var thisPix,data,colorMix,midiKey,noteDur,velocity,timeIncrement;
+var omitRepeats = Array.newClear(128);
+var filename = SCDoc.helpSourceDir +/+ "images/Swamp.png";
+var img =  Image.new(filename);
+var m = SimpleMIDIFile("~/Desktop/Swamp-RGB-mix.mid");
+m.init1(4, tempo, "4/4");
+m.timeMode = \seconds
+timeIncrement = duration / img.width;
+noteDur = timeIncrement;
+img.width.do({ arg x;
+	omitRepeats.fill(0);
+	img.height.do({arg y;
+	   thisPix = img.getPixel(x,y);
+	   data = Image.pixelToColor(thisPix);
+	   midiKey = y.linlin(0,(img.height - 1),109,21).floor;
+	   colorMix = (data.red + data.blue + data.green) / 3;
+	   if(omitRepeats[midiKey] != 1,{
+	      velocity = colorMix.linlin(0,1,1,127).floor;
+		if(velocity > 1,{
+		   m.addNote(midiKey,velocity,now,noteDur,0,track:1,sort:false);
+		   omitRepeats[midiKey] = 1});
+	   });
+	});
+	now = now + timeIncrement;
+});
+m.sortMIDIEvents;
+m.adjustEndOfTrack;
+m.write;
+
+Figure 11.32 Generating a MIDI file from image pixel data. 
+
